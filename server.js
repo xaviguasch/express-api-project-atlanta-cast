@@ -22,7 +22,6 @@ const atlantaCast = {
       year: 2015,
     },
   ],
-
   'brian tyree henry': [
     {
       title: 'Eternals',
@@ -74,13 +73,27 @@ const atlantaCast = {
       year: 2018,
     },
   ],
+  unknown: {
+    title: "Actor isn't part of the cast ",
+    posterImg:
+      'https://i.pinimg.com/originals/c4/96/91/c496911918bb05469ff404f66fb63990.jpg',
+    year: 'Check your spelling',
+  },
 }
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api', (req, res) => {})
+app.get('/api/:name', (req, res) => {
+  const actorName = req.params.name.toLowerCase()
+
+  if (atlantaCast[actorName]) {
+    res.json(atlantaCast[actorName])
+  } else {
+    res.json(atlantaCast['unknown'])
+  }
+})
 
 app.listen(process.env.PORT || PORT, () => {
   console.log(`The server is running on port ${PORT}`)
